@@ -1,0 +1,19 @@
+#!/bin/bash
+
+qsub -N dgemm-atlas-32   -o dgemm-atlas-0032.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=32
+qsub -N dgemm-atlas-768  -o dgemm-atlas-0768.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=768
+qsub -N dgemm-atlas-1458 -o dgemm-atlas-1458.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=1458
+qsub -N dgemm-atlas-1    -o dgemm-atlas-0001.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=1
+qsub -N dgemm-atlas-2    -o dgemm-atlas-0002.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=2
+qsub -N dgemm-atlas-4    -o dgemm-atlas-0004.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=4
+qsub -N dgemm-atlas-8    -o dgemm-atlas-0008.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=8
+qsub -N dgemm-atlas-16   -o dgemm-atlas-0016.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=16
+qsub -N dgemm-atlas-64   -o dgemm-atlas-0064.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=64
+qsub -N dgemm-atlas-128  -o dgemm-atlas-0128.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=128
+qsub -N dgemm-atlas-256  -o dgemm-atlas-0256.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=256
+qsub -N dgemm-atlas-512  -o dgemm-atlas-0512.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=512
+qsub -N dgemm-atlas-1024 -o dgemm-atlas-1024.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=1024
+qsub -N dgemm-atlas-2048 -o dgemm-atlas-2048.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=2048
+qsub -N dgemm-atlas-4096 -o dgemm-atlas-4096.log qsub.cyence.cuda-6-5-atlas -v ARRAYSIZE=4096
+
+

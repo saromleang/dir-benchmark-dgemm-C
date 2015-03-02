@@ -1,0 +1,19 @@
+#!/bin/bash
+
+qsub -N dgemm-openBLAS-32   -o dgemm-openBLAS-0032.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=32
+qsub -N dgemm-openBLAS-768  -o dgemm-openBLAS-0768.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=768
+qsub -N dgemm-openBLAS-1458 -o dgemm-openBLAS-1458.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=1458
+qsub -N dgemm-openBLAS-1    -o dgemm-openBLAS-0001.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=1
+qsub -N dgemm-openBLAS-2    -o dgemm-openBLAS-0002.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=2
+qsub -N dgemm-openBLAS-4    -o dgemm-openBLAS-0004.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=4
+qsub -N dgemm-openBLAS-8    -o dgemm-openBLAS-0008.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=8
+qsub -N dgemm-openBLAS-16   -o dgemm-openBLAS-0016.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=16
+qsub -N dgemm-openBLAS-64   -o dgemm-openBLAS-0064.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=64
+qsub -N dgemm-openBLAS-128  -o dgemm-openBLAS-0128.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=128
+qsub -N dgemm-openBLAS-256  -o dgemm-openBLAS-0256.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=256
+qsub -N dgemm-openBLAS-512  -o dgemm-openBLAS-0512.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=512
+qsub -N dgemm-openBLAS-1024 -o dgemm-openBLAS-1024.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=1024
+qsub -N dgemm-openBLAS-2048 -o dgemm-openBLAS-2048.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=2048
+qsub -N dgemm-openBLAS-4096 -o dgemm-openBLAS-4096.log qsub.cyence.cuda-6-5-openBLAS -v ARRAYSIZE=4096
+
+

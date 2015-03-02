@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#PBS -j oe
+#PBS -q gpu
+#PBS -l nodes=1:ppn=16:gpu,walltime=504:00:00
+
+cd $PBS_O_WORKDIR
+
+/home/ssok1/bin/my_ipcrm
+
+#
+# Usage: qsub -o output.file qsub.bolt.cuda-6.5 [size of matrix A in MB]
+#
+
+CURRENTDIR=`pwd`
+
+export CUDA_ROOT=/usr/local/cuda
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+echo "Running on host:" `hostname`
+ldd $CURRENTDIR/dgemm.mkl.x
+
+date
+$CURRENTDIR/dgemm.mkl.x $ARRAYSIZE
+date
+
+/home/ssok1/bin/my_ipcrm

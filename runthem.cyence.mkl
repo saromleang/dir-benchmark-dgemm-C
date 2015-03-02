@@ -1,0 +1,19 @@
+#!/bin/bash
+
+qsub -N dgemm-mkl-32   -o dgemm-mkl-0032.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=32
+qsub -N dgemm-mkl-768  -o dgemm-mkl-0768.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=768
+qsub -N dgemm-mkl-1458 -o dgemm-mkl-1458.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=1458
+qsub -N dgemm-mkl-1    -o dgemm-mkl-0001.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=1
+qsub -N dgemm-mkl-2    -o dgemm-mkl-0002.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=2
+qsub -N dgemm-mkl-4    -o dgemm-mkl-0004.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=4
+qsub -N dgemm-mkl-8    -o dgemm-mkl-0008.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=8
+qsub -N dgemm-mkl-16   -o dgemm-mkl-0016.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=16
+qsub -N dgemm-mkl-64   -o dgemm-mkl-0064.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=64
+qsub -N dgemm-mkl-128  -o dgemm-mkl-0128.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=128
+qsub -N dgemm-mkl-256  -o dgemm-mkl-0256.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=256
+qsub -N dgemm-mkl-512  -o dgemm-mkl-0512.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=512
+qsub -N dgemm-mkl-1024 -o dgemm-mkl-1024.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=1024
+qsub -N dgemm-mkl-2048 -o dgemm-mkl-2048.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=2048
+qsub -N dgemm-mkl-4096 -o dgemm-mkl-4096.log qsub.cyence.cuda-6-5-mkl -v ARRAYSIZE=4096
+
+

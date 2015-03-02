@@ -7,7 +7,7 @@ make [options] BLAS=(atlas|openBLAS|mkl)
 
 options:
 
-all: default
+all: default<br>
 <br>Compiler optimization level: -O3
 <br>Builds benchmark with no pinned host memory, with no niave cpu dgemm calculation, with no verification of results.
 

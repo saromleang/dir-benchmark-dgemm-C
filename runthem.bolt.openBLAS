@@ -1,0 +1,57 @@
+#!/bin/bash
+
+sed -i 's/queue.q/k20dev.q/g' qsub.bolt.cuda-5.0-openBLAS
+
+qsub -N dgemm.openBLAS.32   -l hostname=compute-1-0.local -o dgemm-openBLAS-0032.log     qsub.bolt.cuda-5.0-openBLAS 32
+qsub -N dgemm.openBLAS.768  -l hostname=compute-1-1.local -o dgemm-openBLAS-0768.log     qsub.bolt.cuda-5.0-openBLAS 768
+qsub -N dgemm.openBLAS.1458 -l hostname=compute-1-2.local -o dgemm-openBLAS-1458.log     qsub.bolt.cuda-5.0-openBLAS 1458
+qsub -N dgemm.openBLAS.1    -l hostname=compute-1-3.local -o dgemm-openBLAS-0001.log     qsub.bolt.cuda-5.0-openBLAS 1
+qsub -N dgemm.openBLAS.2    -l hostname=compute-1-4.local -o dgemm-openBLAS-0002.log     qsub.bolt.cuda-5.0-openBLAS 2
+qsub -N dgemm.openBLAS.4    -l hostname=compute-1-0.local -o dgemm-openBLAS-0004.log     qsub.bolt.cuda-5.0-openBLAS 4
+qsub -N dgemm.openBLAS.8    -l hostname=compute-1-1.local -o dgemm-openBLAS-0008.log     qsub.bolt.cuda-5.0-openBLAS 8
+qsub -N dgemm.openBLAS.16   -l hostname=compute-1-2.local -o dgemm-openBLAS-0016.log     qsub.bolt.cuda-5.0-openBLAS 16
+qsub -N dgemm.openBLAS.64   -l hostname=compute-1-3.local -o dgemm-openBLAS-0064.log     qsub.bolt.cuda-5.0-openBLAS 64
+qsub -N dgemm.openBLAS.128  -l hostname=compute-1-4.local -o dgemm-openBLAS-0128.log     qsub.bolt.cuda-5.0-openBLAS 128
+qsub -N dgemm.openBLAS.256  -l hostname=compute-1-0.local -o dgemm-openBLAS-0256.log     qsub.bolt.cuda-5.0-openBLAS 256
+qsub -N dgemm.openBLAS.512  -l hostname=compute-1-1.local -o dgemm-openBLAS-0512.log     qsub.bolt.cuda-5.0-openBLAS 512
+qsub -N dgemm.openBLAS.1024 -l hostname=compute-1-2.local -o dgemm-openBLAS-1024.log     qsub.bolt.cuda-5.0-openBLAS 1024
+qsub -N dgemm.openBLAS.2048 -l hostname=compute-1-3.local -o dgemm-openBLAS-2048.log     qsub.bolt.cuda-5.0-openBLAS 2048
+
+sed -i 's/k20dev.q/queue.q/g' qsub.bolt.cuda-5.0-openBLAS
+
+exit
+
+sed -i 's/queue.q/experimental.q/g' qsub.bolt.cuda-5.0-openBLAS
+
+qsub -N dgemm.openBLAS.32   -l hostname=compute-1-7.local -o dgemm-openBLAS-0032-k80.log qsub.bolt.cuda-5.0-openBLAS 32
+qsub -N dgemm.openBLAS.768  -l hostname=compute-1-7.local -o dgemm-openBLAS-0768-k80.log qsub.bolt.cuda-5.0-openBLAS 768
+qsub -N dgemm.openBLAS.1458 -l hostname=compute-1-7.local -o dgemm-openBLAS-1458-k80.log qsub.bolt.cuda-5.0-openBLAS 1458
+qsub -N dgemm.openBLAS.1    -l hostname=compute-1-7.local -o dgemm-openBLAS-0001-k80.log qsub.bolt.cuda-5.0-openBLAS 1
+qsub -N dgemm.openBLAS.2    -l hostname=compute-1-7.local -o dgemm-openBLAS-0002-k80.log qsub.bolt.cuda-5.0-openBLAS 2
+qsub -N dgemm.openBLAS.4    -l hostname=compute-1-7.local -o dgemm-openBLAS-0004-k80.log qsub.bolt.cuda-5.0-openBLAS 4
+qsub -N dgemm.openBLAS.8    -l hostname=compute-1-7.local -o dgemm-openBLAS-0008-k80.log qsub.bolt.cuda-5.0-openBLAS 8
+qsub -N dgemm.openBLAS.16   -l hostname=compute-1-7.local -o dgemm-openBLAS-0016-k80.log qsub.bolt.cuda-5.0-openBLAS 16
+qsub -N dgemm.openBLAS.64   -l hostname=compute-1-7.local -o dgemm-openBLAS-0064-k80.log qsub.bolt.cuda-5.0-openBLAS 64
+qsub -N dgemm.openBLAS.128  -l hostname=compute-1-7.local -o dgemm-openBLAS-0128-k80.log qsub.bolt.cuda-5.0-openBLAS 128
+qsub -N dgemm.openBLAS.256  -l hostname=compute-1-7.local -o dgemm-openBLAS-0256-k80.log qsub.bolt.cuda-5.0-openBLAS 256
+qsub -N dgemm.openBLAS.512  -l hostname=compute-1-7.local -o dgemm-openBLAS-0512-k80.log qsub.bolt.cuda-5.0-openBLAS 512
+qsub -N dgemm.openBLAS.1024 -l hostname=compute-1-7.local -o dgemm-openBLAS-1024-k80.log qsub.bolt.cuda-5.0-openBLAS 1024
+qsub -N dgemm.openBLAS.2048 -l hostname=compute-1-7.local -o dgemm-openBLAS-2048-k80.log qsub.bolt.cuda-5.0-openBLAS 2048
+
+exit
+
+qsub -N dgemm.openBLAS.32   -l hostname=compute-1-8.local -o dgemm-openBLAS-0032-k40.log qsub.bolt.cuda-5.0-openBLAS 32
+qsub -N dgemm.openBLAS.768  -l hostname=compute-1-8.local -o dgemm-openBLAS-0768-k40.log qsub.bolt.cuda-5.0-openBLAS 768
+qsub -N dgemm.openBLAS.1458 -l hostname=compute-1-8.local -o dgemm-openBLAS-1458-k40.log qsub.bolt.cuda-5.0-openBLAS 1458
+qsub -N dgemm.openBLAS.1    -l hostname=compute-1-8.local -o dgemm-openBLAS-0001-k40.log qsub.bolt.cuda-5.0-openBLAS 1
+qsub -N dgemm.openBLAS.2    -l hostname=compute-1-8.local -o dgemm-openBLAS-0002-k40.log qsub.bolt.cuda-5.0-openBLAS 2
+qsub -N dgemm.openBLAS.4    -l hostname=compute-1-8.local -o dgemm-openBLAS-0004-k40.log qsub.bolt.cuda-5.0-openBLAS 4
+qsub -N dgemm.openBLAS.8    -l hostname=compute-1-8.local -o dgemm-openBLAS-0008-k40.log qsub.bolt.cuda-5.0-openBLAS 8
+qsub -N dgemm.openBLAS.16   -l hostname=compute-1-8.local -o dgemm-openBLAS-0016-k40.log qsub.bolt.cuda-5.0-openBLAS 16
+qsub -N dgemm.openBLAS.64   -l hostname=compute-1-8.local -o dgemm-openBLAS-0064-k40.log qsub.bolt.cuda-5.0-openBLAS 64
+qsub -N dgemm.openBLAS.128  -l hostname=compute-1-8.local -o dgemm-openBLAS-0128-k40.log qsub.bolt.cuda-5.0-openBLAS 128
+qsub -N dgemm.openBLAS.256  -l hostname=compute-1-8.local -o dgemm-openBLAS-0256-k40.log qsub.bolt.cuda-5.0-openBLAS 256
+qsub -N dgemm.openBLAS.512  -l hostname=compute-1-8.local -o dgemm-openBLAS-0512-k40.log qsub.bolt.cuda-5.0-openBLAS 512
+qsub -N dgemm.openBLAS.1024 -l hostname=compute-1-8.local -o dgemm-openBLAS-1024-k40.log qsub.bolt.cuda-5.0-openBLAS 1024
+qsub -N dgemm.openBLAS.2048 -l hostname=compute-1-8.local -o dgemm-openBLAS-2048-k40.log qsub.bolt.cuda-5.0-openBLAS 2048
+

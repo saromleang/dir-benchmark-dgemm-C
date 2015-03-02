@@ -1,0 +1,29 @@
+#!/bin/bash
+
+/home/sarom/bin/my_ipcrm
+
+#
+# Usage: qsub -o output.file qsub.bolt.cuda-5.0 [size of matrix A in MB]
+#
+
+#$ -S /bin/bash
+#$ -cwd
+#$ -j y
+#$ -l h_rt=730:00:00
+#$ -pe ddi 1
+#$ -q queue.q
+
+CURRENTDIR=`pwd`
+
+export CUDA_ROOT=/share/apps/cuda
+export PATH=/share/apps/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/share/apps/cuda/lib64:$LD_LIBRARY_PATH
+
+echo "Running on host:" `hostname`
+ldd $CURRENTDIR/dgemm.atlas.x
+
+date
+$CURRENTDIR/dgemm.atlas.x $1 
+date
+
+/home/sarom/bin/my_ipcrm

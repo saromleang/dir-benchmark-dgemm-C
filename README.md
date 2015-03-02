@@ -3,57 +3,47 @@ Benchmark K20 dgemm.c
 
 Copy the appropriate Makefile.(bolt|cyence) to Makefile
 
-make [options] BLAS=(atlas|openBLAS|mkl)
+**make [options] BLAS=(atlas|openBLAS|mkl)**
 
 options:
 
-all: default
-
-  Compiler optimization level: -O3
+**all: default**<br>
+  Compiler optimization level: -O3<br>
   Builds benchmark with no pinned host memory, with no niave cpu dgemm calculation, with no verification of results.
 
-debug:
-
-  Compiler optimization level: not set
+**debug:**<br>
+  Compiler optimization level: not set<br>
   Builds the default with verbose printing.
 
-cpu-dgemm:
-
-  Compiler optimization level: -O3
+**cpu-dgemm:**<br>
+  Compiler optimization level: -O3<br>
   A niave cpu dgemm implementation is performed.
 
-verify:
-
-  Compiler optimization level: -O3
+**verify:**<br>
+  Compiler optimization level: -O3<br>
   Accelerator blas calculated DGEMM product and CPU blas calcualated DGEMM product is compared elememt by element a niave cpu calculated DGEMM product.  The accumulated unsigned error is printed out.
   
-debug-verify:
-
-  Compiler optimization level: not set
+**debug-verify:**<br>
+  Compiler optimization level: not set<br>
   Adds verbose printing on top of a verify build.
 
-pinned:
-
-  Compiler optimization level: -O3
+**pinned:**<br>
+  Compiler optimization level: -O3<br>
   Builds benchmark with pinned host memory.
   
-debug-pinned:
-
-  Compiler optimization level: not set
+**debug-pinned:**<br>
+  Compiler optimization level: not set<br>
   Adds verbose printing on top of a pinned build.
   
-cpu-dgemm-pinned:
-
-  Compiler optimization level: -O3
+**cpu-dgemm-pinned:**<br>
+  Compiler optimization level: -O3<br>
   Builds benchmark with pinned host memory and a niave cpu dgemm implementation is performed.
   
-verify-pinned:
-
-  Compiler optimization level: -O3
+**verify-pinned:**<br>
+  Compiler optimization level: -O3<br>
   Builds benchmark with pinned host memory.  Accelerator blas calculated DGEMM product and CPU blas calcualated DGEMM product is compared elememt by element a niave cpu calculated DGEMM product.  The accumulated unsigned error is printed out.
 
-debug-verify-pinned:
-
-  Compiler optimization level: not set
+**debug-verify-pinned:**<br>
+  Compiler optimization level: not set<br>
   Adds verbose printing on top of a verify-pinned build.
   

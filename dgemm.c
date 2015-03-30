@@ -2,68 +2,73 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include <cuda.h>
-#include <curand.h>
-#include <cuda_runtime.h>
-#include "cublas_v2.h"
+
 #ifdef MKL
-#include "mkl.h"
+  #include "mkl.h"
 #else
-#include "cblas.h"
+  #include "cblas.h"
 #endif
-/* CUDA VERSION 6.5 or HIGHER */
-#define CUDA_CALL(x) \
-    do \
-    {  \
-      if((x)==cudaErrorInvalidDevicePointer) \
-      { \
-        printf("Error CUDA Error Invalid Device Pointer at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-      if((x)==cudaErrorInitializationError ) \
-      { \
-        printf("Error CUDA Initialization at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-      if((x)==cudaErrorMemoryAllocation) \
-      { \
-        printf("Error CUDA Memory Allocation at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-      if((x)!=cudaSuccess) \
-      { \
-        printf("Error at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-    } while(0)
 
-#define CUBLAS_CALL(x) \
-    do \
-    {  \
-      if((x)==CUBLAS_STATUS_NOT_INITIALIZED) \
-      { \
-        printf("Missing call to cublasCreate() at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-      if((x)!=CUBLAS_STATUS_SUCCESS) \
-      { \
-        printf("Error at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-    } while(0)
+#ifndef HASWELL
+  #include <cuda.h>
+  #include <curand.h>
+  #include <cuda_runtime.h>
+  #include "cublas_v2.h"
 
-#define CURAND_CALL(x) \
-    do \
-    {  \
-      if((x)!=CURAND_STATUS_SUCCESS) \
-      { \
-        printf("Error at %s:%d\n",__FILE__,__LINE__); \
-        return EXIT_FAILURE; \
-      } \
-    } while(0)
+  /* CUDA VERSION 6.5 or HIGHER */
+  #define CUDA_CALL(x) \
+      do \
+      {  \
+        if((x)==cudaErrorInvalidDevicePointer) \
+        { \
+          printf("Error CUDA Error Invalid Device Pointer at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+        if((x)==cudaErrorInitializationError ) \
+        { \
+          printf("Error CUDA Initialization at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+        if((x)==cudaErrorMemoryAllocation) \
+        { \
+          printf("Error CUDA Memory Allocation at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+        if((x)!=cudaSuccess) \
+        { \
+          printf("Error at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+      } while(0)
+
+  #define CUBLAS_CALL(x) \
+      do \
+      {  \
+        if((x)==CUBLAS_STATUS_NOT_INITIALIZED) \
+        { \
+          printf("Missing call to cublasCreate() at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+        if((x)!=CUBLAS_STATUS_SUCCESS) \
+        { \
+          printf("Error at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+      } while(0)
+
+  #define CURAND_CALL(x) \
+      do \
+      {  \
+        if((x)!=CURAND_STATUS_SUCCESS) \
+        { \
+          printf("Error at %s:%d\n",__FILE__,__LINE__); \
+          return EXIT_FAILURE; \
+        } \
+      } while(0)
+#endif
 
 #define IDX2C(i,j,ld) (((j)*(ld))+(i))
-    
+
 //#define m  500
 //#define k 1000
 //#define n 1500
@@ -86,6 +91,8 @@ int main(int argc, char *argv[])
 {
 /* TURN OFF BUFFERING */
   setbuf(stdout, NULL); 
+
+#ifndef HASWELL
 /* CUDA */
   cudaError_t cudaStat;
 /* CUBLAS */
@@ -94,7 +101,8 @@ int main(int argc, char *argv[])
   curandGenerator_t gen;
 /* TIMINGS */
   cudaEvent_t start, stop;
-
+#endif
+  
   long long int m=500;
   long long int k=1000;
   long long int n=1500;
@@ -146,6 +154,7 @@ int main(int argc, char *argv[])
   
   double nFPOperations=2*m*k*n;
 
+#ifndef HASWELL
   CUBLAS_CALL(cublasCreate(&handle));
 
 /* CREATE CUDA EVENTS FOR TIMING */
@@ -160,7 +169,8 @@ int main(int argc, char *argv[])
 
 /* GET THE AMOUNT OF FREE MEMORY */
   CUDA_CALL(cudaMemGetInfo(&freeGPUMemoryInBytes,&totalGPUMemoryInBytes));
-
+#endif
+  
 /* READ THE NUMBER OF MATRIX ELEMENTS IN MATRIX [A] FROM ARGUMENT LIST */
   if (sscanf (argv[1], "%lf", &matrixSizeMB)!=1) 
   { 
@@ -170,8 +180,10 @@ int main(int argc, char *argv[])
 
   maxRows=matrixSizeMB*1024*1024/8;
 
+#ifndef HASWELL
   printf("+----------------------+\n"); 
   printf("| CUDA VERSION : %d  |\n",CUDA_VERSION);
+#endif
   printf("+----------------------+\n"); 
   printf("| Size of Matrix [A]  : %.2f MB\n",matrixSizeMB);
   printf("+----------------------+\n"); 
@@ -192,7 +204,6 @@ int main(int argc, char *argv[])
 
 //  maxMatrixSize=(11.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
     maxMatrixSize=(0.9*freeGPUMemoryInBytes/8.0-nRows*nCols)/(nRows+nCols);
-    
 #ifdef PINNED
     printf("| USE OF PINNED MEMORY: \n");
 #else
@@ -214,10 +225,16 @@ int main(int argc, char *argv[])
 
     l=1;
     
+#ifndef HASWELL
     printf("  %3s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %13s, %13s, %13s, %13s, %12s, %12s\n",
            "#","M","K","N","[A] (MB)","[B] (MB)","[C] (MB)","Total (MB)","GPU (MB)","REQ (MB)",
            "D2H[A] (GB/s)","D2H[B] (GB/s)","H2D[A] (GB/s)","H2D[B] (GB/s)","D2H[C] (GB/s)",
            "CBLAS (GF/s)","CUBLAS (GF/s)","CUBLAS+DT (GF/s)","CPU (GF/s)","CBLAS Error","CUBLAS Error");
+#else
+    printf("  %3s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %13s, %13s, %12s\n",
+           "#","M","K","N","[A] (MB)","[B] (MB)","[C] (MB)","Total (MB)","REQ (MB)",
+           "CBLAS (GF/s)","CPU (GF/s)","CBLAS Error");
+#endif
     do
     {
       m=nRowsA;
@@ -250,15 +267,17 @@ int main(int argc, char *argv[])
       printf("+----------------------+\n");
       printf("+ MEMORY USAGE \n");
       printf("+----------------------+\n");
+  #ifndef HASWELL
       printf("| Free     memory  (B):   %15zu\n",freeGPUMemoryInBytes);
       printf("| Total    memory  (B):   %15zu\n",totalGPUMemoryInBytes);
       printf("| Free     memory (MB):   %15.2f\n",(double)freeGPUMemoryInBytes/1048576);
       printf("| Total    memory (MB):   %15.2f\n",(double)totalGPUMemoryInBytes/1048576);
       printf("+----------------------+\n");
+  #endif
       printf("| Required memory (MB):   %15.2f\n",(double)memoryRequired/1048576);
       printf("+----------------------+\n");
 #endif
-      
+
 #ifdef PINNED
 /* IF  PINNED HOST MEMORY IS USED */
       cudaMallocHost((void **)&a,m*k*sizeof(double));
@@ -275,6 +294,7 @@ int main(int argc, char *argv[])
       c_no_blas=(double*)malloc(m*n*sizeof(double));
       c_cblas=(double*)malloc(m*n*sizeof(double));
 
+#ifndef HASWELL
 /* DEVICE MEMORY */
       cudaMalloc((void **)&rand_a,m*k*sizeof(double));
       cudaMalloc((void **)&rand_b,k*n*sizeof(double));
@@ -309,6 +329,7 @@ int main(int argc, char *argv[])
       cudaMalloc((void **)&d_a,m*k*sizeof(double));
       cudaMalloc((void **)&d_b,k*n*sizeof(double));
       cudaMalloc((void **)&d_c,m*n*sizeof(double));
+#endif
 
 /* PERFORM A BLAS ASSUMING MATRIX [A] & [B] IN COLUMN MAJOR ORDER */
       clockIn=dseconds();
@@ -325,6 +346,7 @@ int main(int argc, char *argv[])
       float msecCBLAS=msecTime;
       double performanceCBLAS=getGFlops(nFPOperations,msecCBLAS);
 
+#ifndef HASWELL
 /* TRANSFER MATRIX A TO DEVICE */
       CUDA_CALL(cudaEventRecord(start, 0));
       CUDA_CALL(cudaMemcpy(d_a,a,m*k*sizeof(double),cudaMemcpyHostToDevice));
@@ -368,6 +390,7 @@ int main(int argc, char *argv[])
       double performanceD2H_C=getBandwidth(m,n,msecD2H_C);
       float msecTotal=(msecCUBLAS/iterations)+msecH2D_A+msecH2D_B+msecD2H_C;
       double performanceCUBLAS_wDT=getGFlops(nFPOperations,msecTotal);
+#endif
 
 #ifdef CPU_DGEMM
 /* MATRIX-MATRIX MULTIPLY ON CPU WITH [A] & [B] IN COLUMN-MAJOR ORDERING */
@@ -383,34 +406,48 @@ int main(int argc, char *argv[])
       double performanceNoBLAS=getGFlops(nFPOperations,msecNoBLAS);
 #endif
 
-#ifdef VERIFY
+#ifndef HASWELL
+  #ifdef VERIFY
       errorCheckCBLAS=0.0;
       errorCheckCBLAS=matrixMultiplyError(m, n, c_cblas, c_no_blas);
-#endif
+  #endif
 
-#ifdef VERIFY
+  #ifdef VERIFY
       errorCheckCUBLAS=0.0;
       errorCheckCUBLAS=matrixMultiplyError(m, n, c_cublas, c_no_blas);
+  #endif
 #endif
 
 /* PRINT OUT RESULTS */
-#ifdef CPU_DGEMM
+#ifndef HASWELL
+  #ifdef CPU_DGEMM
       printf("  %3d, %10lld, %10lld, %10lld, %10.4f, %10.4f, %10.4f, %10.4f, %10.2f, %10.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %16.4f, %13.4f",
              l,m,k,n,sizeAinMBs,sizeBinMBs,sizeCinMBs,sizeAinMBs+sizeBinMBs+sizeCinMBs,
              (double)freeGPUMemoryInBytes/1048576.0,(double)memoryRequired/1048576.0,
              performanceD2H_A,performanceD2H_B,performanceH2D_A,performanceH2D_B,performanceD2H_C,
              performanceCBLAS,performanceCUBLAS,performanceCUBLAS_wDT,
              performanceNoBLAS);
-#else
+  #else
       printf("  %3d, %10lld, %10lld, %10lld, %10.4f, %10.4f, %10.4f, %10.4f, %10.2f, %10.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %16.4f",
              l,m,k,n,sizeAinMBs,sizeBinMBs,sizeCinMBs,sizeAinMBs+sizeBinMBs+sizeCinMBs,
              (double)freeGPUMemoryInBytes/1048576.0,(double)memoryRequired/1048576.0,
              performanceD2H_A,performanceD2H_B,performanceH2D_A,performanceH2D_B,performanceD2H_C,
              performanceCBLAS,performanceCUBLAS,performanceCUBLAS_wDT);
+  #endif
+#else
+      printf("  %3d, %10lld, %10lld, %10lld, %10.4f, %10.4f, %10.4f, %10.4f, %10.2f, %13.4f",
+             l,m,k,n,sizeAinMBs,sizeBinMBs,sizeCinMBs,sizeAinMBs+sizeBinMBs+sizeCinMBs,
+             (double)memoryRequired/1048576.0,
+             performanceCBLAS);
 #endif
+
 /* EITHER PRINT OUT MORE STUFF OR A LINE BREAK */
-#ifdef VERIFY
+#ifndef HASWELL
+  #ifdef VERIFY
       printf(", %.10f, %.10f\n",errorCheckCBLAS,errorCheckCUBLAS);
+  #else
+      printf("\n");
+  #endif
 #else
       printf("\n");
 #endif
@@ -438,23 +475,28 @@ int main(int argc, char *argv[])
       free(c_no_blas);
       free(c_cblas);
 
+#ifndef HASWELL
 /* DEVICE MEMORY */
       cudaFree(d_a);
       cudaFree(d_b);
       cudaFree(d_c);
-      
+#endif
+
     } while(nColsB <= maxMatrixSize);
     
     printf("+----------------------+\n");
   
   }
 
+#ifndef HASWELL
+/* CUDA HANDLES */
   curandDestroyGenerator(gen);
 
   cublasDestroy(handle);
 
   cudaEventDestroy(start);
   cudaEventDestroy(stop);
+#endif
 
   return EXIT_SUCCESS;
 }

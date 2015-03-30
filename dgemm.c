@@ -202,8 +202,12 @@ int main(int argc, char *argv[])
     nRowsC=nRowsA;
     nColsC=nColsB;
 
-//  maxMatrixSize=(11.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
+#ifndef HASWELL
     maxMatrixSize=(0.9*freeGPUMemoryInBytes/8.0-nRows*nCols)/(nRows+nCols);
+#else
+    maxMatrixSize=(32.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
+#endif
+
 #ifdef PINNED
     printf("| USE OF PINNED MEMORY: \n");
 #else

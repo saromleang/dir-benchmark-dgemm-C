@@ -9,7 +9,7 @@
   #include "cblas.h"
 #endif
 
-#ifndef HASWELL
+#ifndef NOGPU
   #include <cuda.h>
   #include <curand.h>
   #include <cuda_runtime.h>
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 /* TURN OFF BUFFERING */
   setbuf(stdout, NULL); 
 
-#ifndef HASWELL
+#ifndef NOGPU
 /* CUDA */
   cudaError_t cudaStat;
 /* CUBLAS */
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
   
   double nFPOperations=2*m*k*n;
 
-#ifndef HASWELL
+#ifndef NOGPU
   CUBLAS_CALL(cublasCreate(&handle));
 
 /* CREATE CUDA EVENTS FOR TIMING */
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
   maxRows=matrixSizeMB*1024*1024/8;
 
-#ifndef HASWELL
+#ifndef NOGPU
   printf("+----------------------+\n"); 
   printf("| CUDA VERSION : %d  |\n",CUDA_VERSION);
 #endif
@@ -202,10 +202,10 @@ int main(int argc, char *argv[])
     nRowsC=nRowsA;
     nColsC=nColsB;
 
-#ifndef HASWELL
+#ifndef NOGPU
     maxMatrixSize=(0.9*freeGPUMemoryInBytes/8.0-nRows*nCols)/(nRows+nCols);
 #else
-    maxMatrixSize=(32.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
+    maxMatrixSize=(0.9*32.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
 #endif
 
 #ifdef PINNED
@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
 
     l=1;
     
-#ifndef HASWELL
+#ifndef NOGPU
     printf("  %3s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %13s, %13s, %13s, %13s, %12s, %12s\n",
            "#","M","K","N","[A] (MB)","[B] (MB)","[C] (MB)","Total (MB)","GPU (MB)","REQ (MB)",
            "D2H[A] (GB/s)","D2H[B] (GB/s)","H2D[A] (GB/s)","H2D[B] (GB/s)","D2H[C] (GB/s)",
@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
       printf("+----------------------+\n");
       printf("+ MEMORY USAGE \n");
       printf("+----------------------+\n");
-  #ifndef HASWELL
+  #ifndef NOGPU
       printf("| Free     memory  (B):   %15zu\n",freeGPUMemoryInBytes);
       printf("| Total    memory  (B):   %15zu\n",totalGPUMemoryInBytes);
       printf("| Free     memory (MB):   %15.2f\n",(double)freeGPUMemoryInBytes/1048576);
@@ -298,7 +298,7 @@ int main(int argc, char *argv[])
       c_no_blas=(double*)malloc(m*n*sizeof(double));
       c_cblas=(double*)malloc(m*n*sizeof(double));
 
-#ifndef HASWELL
+#ifndef NOGPU
 /* DEVICE MEMORY */
       cudaMalloc((void **)&rand_a,m*k*sizeof(double));
       cudaMalloc((void **)&rand_b,k*n*sizeof(double));
@@ -333,6 +333,41 @@ int main(int argc, char *argv[])
       cudaMalloc((void **)&d_a,m*k*sizeof(double));
       cudaMalloc((void **)&d_b,k*n*sizeof(double));
       cudaMalloc((void **)&d_c,m*n*sizeof(double));
+#else
+/* POPULATE MATRIX [A] & [B] */
+      if(m>n)
+      {
+        for(i=0;i<(n*k);i++)
+        {
+          a[i]=(double)rand() / (double)RAND_MAX;
+          b[i]=(double)rand() / (double)RAND_MAX;
+        }
+        for(j=(n*k);j<(m*k);j++)
+        {
+          a[j]=(double)rand() / (double)RAND_MAX;
+        }
+      }
+      if(m<n)
+      {
+        for(i=0;i<(m*k);i++)
+        {
+          a[i]=(double)rand() / (double)RAND_MAX;
+          b[i]=(double)rand() / (double)RAND_MAX;
+        }
+        for(j=(m*k);j<(n*k);j++)
+        {
+          b[j]=(double)rand() / (double)RAND_MAX;
+        }        
+      }
+      if(m==n)
+      {
+        printf("m == n\n");
+        for(i=0;i<(m*k);i++)
+        {
+          a[i]=(double)rand() / (double)RAND_MAX;
+          b[i]=(double)rand() / (double)RAND_MAX;
+        }
+      }
 #endif
 
 /* PERFORM A BLAS ASSUMING MATRIX [A] & [B] IN COLUMN MAJOR ORDER */
@@ -350,7 +385,7 @@ int main(int argc, char *argv[])
       float msecCBLAS=msecTime;
       double performanceCBLAS=getGFlops(nFPOperations,msecCBLAS);
 
-#ifndef HASWELL
+#ifndef NOGPU
 /* TRANSFER MATRIX A TO DEVICE */
       CUDA_CALL(cudaEventRecord(start, 0));
       CUDA_CALL(cudaMemcpy(d_a,a,m*k*sizeof(double),cudaMemcpyHostToDevice));
@@ -410,7 +445,7 @@ int main(int argc, char *argv[])
       double performanceNoBLAS=getGFlops(nFPOperations,msecNoBLAS);
 #endif
 
-#ifndef HASWELL
+#ifndef NOGPU
   #ifdef VERIFY
       errorCheckCBLAS=0.0;
       errorCheckCBLAS=matrixMultiplyError(m, n, c_cblas, c_no_blas);
@@ -423,7 +458,7 @@ int main(int argc, char *argv[])
 #endif
 
 /* PRINT OUT RESULTS */
-#ifndef HASWELL
+#ifndef NOGPU
   #ifdef CPU_DGEMM
       printf("  %3d, %10lld, %10lld, %10lld, %10.4f, %10.4f, %10.4f, %10.4f, %10.2f, %10.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %13.4f, %16.4f, %13.4f",
              l,m,k,n,sizeAinMBs,sizeBinMBs,sizeCinMBs,sizeAinMBs+sizeBinMBs+sizeCinMBs,
@@ -446,7 +481,7 @@ int main(int argc, char *argv[])
 #endif
 
 /* EITHER PRINT OUT MORE STUFF OR A LINE BREAK */
-#ifndef HASWELL
+#ifndef NOGPU
   #ifdef VERIFY
       printf(", %.10f, %.10f\n",errorCheckCBLAS,errorCheckCUBLAS);
   #else
@@ -479,7 +514,7 @@ int main(int argc, char *argv[])
       free(c_no_blas);
       free(c_cblas);
 
-#ifndef HASWELL
+#ifndef NOGPU
 /* DEVICE MEMORY */
       cudaFree(d_a);
       cudaFree(d_b);
@@ -492,7 +527,7 @@ int main(int argc, char *argv[])
   
   }
 
-#ifndef HASWELL
+#ifndef NOGPU
 /* CUDA HANDLES */
   curandDestroyGenerator(gen);
 

@@ -3,7 +3,7 @@ includes_for_gpu=-I/share/apps/cuda/include
 opt= -O3
 
 ifndef BLAS
-$(error BLAS is not set. Define BLAS=(atlas|openBLAS|mkl))
+$(error BLAS is not set. Define BLAS=(atlas|openBLAS|mkl|mkl-no-gpu))
 endif
 
 ifeq ($(BLAS),atlas)
@@ -24,41 +24,41 @@ ifeq ($(BLAS),mkl)
 	includes_for_blas= -DMKL_ILP64 -Xcompiler -fopenmp -m64 -I${MKLROOT}/include
 endif
 
-ifeq ($(BLAS),mkl-haswell)
+ifeq ($(BLAS),mkl-no-gpu)
   opt= -O3 -DMKL
 	libs_for_blas= -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -Wl,--end-group -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -fopenmp -m64 -I${MKLROOT}/include
 endif
 
 all:
-	nvcc $(opt) $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug:
-	nvcc -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 cpu-dgemm:
-	nvcc $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 verify:
-	nvcc $(opt) -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-verify:
-	nvcc -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 pinned:
-	nvcc $(opt) -DPINNED $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) -DPINNED $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-pinned:
-	nvcc -DPINNED -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc -DPINNED -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 cpu-dgemm-pinned:
-	nvcc $(opt) -DPINNED -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) -DPINNED -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 verify-pinned:
-	nvcc $(opt) -DPINNED -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc $(opt) -DPINNED -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-verify-pinned:
-	nvcc -DPINNED -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.x
+	nvcc -DPINNED -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
-haswell:
-	gcc $(opt) -DHASWELL $(includes_for_blas) -lm dgemm.c $(libs_for_blas) -o dgemm.x
+no-gpu:
+	gcc $(opt) -DNOGPU $(includes_for_blas) -lm dgemm.c $(libs_for_blas) -o dgemm.$(BLAS).x

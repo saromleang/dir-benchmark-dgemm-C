@@ -5,6 +5,9 @@
 
 #ifdef MKL
   #include "mkl.h"
+  #ifdef NOGPU
+    #include "mkl_vsl.h"
+  #endif
 #else
   #include "cblas.h"
 #endif
@@ -102,7 +105,14 @@ int main(int argc, char *argv[])
 /* TIMINGS */
   cudaEvent_t start, stop;
 #endif
-  
+
+#ifdef NOGPU
+  #ifdef MKL
+    VSLStreamStatePtr stream;
+    vslNewStream(&stream, VSL_BRNG_MT19937, 777777);
+  #endif
+#endif
+
   long long int m=500;
   long long int k=1000;
   long long int n=1500;
@@ -235,9 +245,10 @@ int main(int argc, char *argv[])
            "D2H[A] (GB/s)","D2H[B] (GB/s)","H2D[A] (GB/s)","H2D[B] (GB/s)","D2H[C] (GB/s)",
            "CBLAS (GF/s)","CUBLAS (GF/s)","CUBLAS+DT (GF/s)","CPU (GF/s)","CBLAS Error","CUBLAS Error");
 #else
-    printf("  %3s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %13s, %13s, %12s\n",
+    printf("  %3s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %10s, %13s\n",
            "#","M","K","N","[A] (MB)","[B] (MB)","[C] (MB)","Total (MB)","REQ (MB)",
-           "CBLAS (GF/s)","CPU (GF/s)","CBLAS Error");
+           "CBLAS (GF/s)");
+//         "CBLAS (GF/s)","CPU (GF/s)","CBLAS Error");
 #endif
     do
     {
@@ -335,6 +346,12 @@ int main(int argc, char *argv[])
       cudaMalloc((void **)&d_c,m*n*sizeof(double));
 #else
 /* POPULATE MATRIX [A] & [B] */
+  #ifdef MKL
+// See: https://software.intel.com/en-us/node/521851
+      vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_ICDF,stream,m*k, a, 0.0, 1.0);
+      vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_ICDF,stream,n*k, b, 0.0, 1.0);
+
+  #else
       if(m>n)
       {
         for(i=0;i<(n*k);i++)
@@ -368,6 +385,7 @@ int main(int argc, char *argv[])
           b[i]=(double)rand() / (double)RAND_MAX;
         }
       }
+  #endif
 #endif
 
 /* PERFORM A BLAS ASSUMING MATRIX [A] & [B] IN COLUMN MAJOR ORDER */
@@ -526,6 +544,12 @@ int main(int argc, char *argv[])
     printf("+----------------------+\n");
   
   }
+
+#ifdef NOGPU
+  #ifdef MKL
+    vslDeleteStream(&stream);
+  #endif
+#endif
 
 #ifndef NOGPU
 /* CUDA HANDLES */

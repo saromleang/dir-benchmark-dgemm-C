@@ -1,12 +1,48 @@
+define newline
+
+
+endef
+
 libs_for_gpu=-L/share/apps/cuda/lib64 -lcublas -lcurand
 includes_for_gpu=-I/share/apps/cuda/include
 opt= -O3
 
 ifndef BLAS
-$(error BLAS is not set. Define BLAS=(atlas|openBLAS|mkl|mkl-no-gpu))
+ echo -e '$(error $(newline)\
+ BLAS was not defined.$(newline)\
+ Define -BLAS=$(newline)\
+              atlas-sandybridge-gnu$(newline)\
+              atlas-haswell-gnu$(newline)\
+              atlas-dev-sandybridge-gnu$(newline)\
+              atlas-dev-haswell-gnu$(newline)\
+              openBLAS-sandybridge-gnu$(newline)\
+              openBLAS-sandybridge-intel$(newline)\
+              openBLAS-haswell-gnu$(newline)\
+              openBLAS-haswell-intel$(newline)\
+              mkl$(newline)\
+))'
 endif
 
-ifeq ($(BLAS),atlas)
+ifneq (,$(findstring atlas,$(BLAS)))
+ BLASNAME=atlas
+endif
+
+ifneq (,$(findstring openBLAS,$(BLAS)))
+ BLASNAME=openBLAS
+endif
+
+ifneq (,$(findstring mkl,$(BLAS)))
+ BLASNAME=mkl
+endif
+
+ifndef BLAS
+ $(error Unknown BLAS selection)
+else
+ $(info BLAS=$(BLAS))
+ $(info BLASNAME=$(BLASNAME))
+endif
+
+ifeq ($(BLASNAME),atlas)
   opt= -O3
 	libs_for_blas=-L/share/apps/share/blas/$(BLAS)/lib -lptcblas -latlas -lpthread
 	includes_for_blas=-I/share/apps/share/blas/$(BLAS)/include

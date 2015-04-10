@@ -1,30 +1,67 @@
-libs_for_gpu=-L/share/apps/cuda/lib64 -lcublas -lcurand
-includes_for_gpu=-I/share/apps/cuda/include
+define newline
+
+
+endef
+
+libs_for_gpu=-L/shared/cuda-6.5/lib64 -lcublas -lcurand
+includes_for_gpu=-I/shared/cuda-6.5/include
 opt= -O3
 
 ifndef BLAS
-$(error BLAS is not set. Define BLAS=(atlas|openBLAS|mkl|mkl-no-gpu))
+ echo -e '$(error $(newline)\
+ BLAS was not defined.$(newline)\
+ Define -BLAS=$(newline)\
+              atlas-sandybridge-gnu$(newline)\
+              atlas-haswell-gnu$(newline)\
+              atlas-dev-sandybridge-gnu$(newline)\
+              atlas-dev-haswell-gnu$(newline)\
+              openBLAS-sandybridge-gnu$(newline)\
+              openBLAS-sandybridge-intel$(newline)\
+              openBLAS-haswell-gnu$(newline)\
+              openBLAS-haswell-intel$(newline)\
+              mkl$(newline)\
+              mkl-with-cuda$(newline)\
+))'
 endif
 
-ifeq ($(BLAS),atlas)
+ifneq (,$(findstring atlas,$(BLAS)))
+ BLASNAME=atlas
+endif
+
+ifneq (,$(findstring openBLAS,$(BLAS)))
+ BLASNAME=openBLAS
+endif
+
+ifneq (,$(findstring mkl,$(BLAS)))
+ BLASNAME=$(BLAS)
+endif
+
+ifndef BLAS
+ $(error Unknown BLAS selection)
+else
+ $(info BLAS=$(BLAS))
+ $(info BLASNAME=$(BLASNAME))
+endif
+
+ifeq ($(BLASNAME),atlas)
   opt= -O3
 	libs_for_blas=-L/work2/quantum/sarom-ssok1/blas/$(BLAS)/lib -lptcblas -latlas -lpthread
 	includes_for_blas=-I/work2/quantum/sarom-ssok1/blas/$(BLAS)/include
 endif
 
-ifeq ($(BLAS),openBLAS)
+ifeq ($(BLASNAME),openBLAS)
   opt= -O3
 	libs_for_blas=-L/work2/quantum/sarom-ssok1/blas/$(BLAS)/lib -lopenblas -lpthread
 	includes_for_blas=-I/work2/quantum/sarom-ssok1/blas/$(BLAS)/include
 endif
 
-ifeq ($(BLAS),mkl)
+ifeq ($(BLASNAME),mkl-with-cuda)
   opt= -O3 -DMKL
 	libs_for_blas=${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -Xcompiler -fopenmp -m64 -I${MKLROOT}/include
 endif
 
-ifeq ($(BLAS),mkl-no-gpu)
+ifeq ($(BLASNAME),mkl)
   opt= -O3 -DMKL
 	libs_for_blas= -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -Wl,--end-group -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -fopenmp -m64 -I${MKLROOT}/include

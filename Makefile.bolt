@@ -20,6 +20,7 @@ ifndef BLAS
               openBLAS-haswell-gnu$(newline)\
               openBLAS-haswell-intel$(newline)\
               mkl$(newline)\
+              mkl-with-cuda$(newline)\
 ))'
 endif
 
@@ -32,7 +33,7 @@ ifneq (,$(findstring openBLAS,$(BLAS)))
 endif
 
 ifneq (,$(findstring mkl,$(BLAS)))
- BLASNAME=mkl
+ BLASNAME=$(BLAS)
 endif
 
 ifndef BLAS
@@ -54,13 +55,13 @@ ifeq ($(BLAS),openBLAS)
 	includes_for_blas=-I/share/apps/share/blas/$(BLAS)/include
 endif
 
-ifeq ($(BLAS),mkl)
+ifeq ($(BLAS),mkl-with-cuda)
   opt= -O3 -DMKL
 	libs_for_blas=${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -Xcompiler -fopenmp -m64 -I${MKLROOT}/include
 endif
 
-ifeq ($(BLAS),mkl-no-gpu)
+ifeq ($(BLAS),mkl)
   opt= -O3 -DMKL
 	libs_for_blas= -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -Wl,--end-group -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -fopenmp -m64 -I${MKLROOT}/include

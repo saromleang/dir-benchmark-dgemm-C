@@ -3,6 +3,13 @@ Benchmark K20 dgemm.c
 
 Copy the appropriate Makefile.(bolt|cyence) to Makefile
 
+bolt:
+make [options] BLAS=(atlas-sandybridge-gnu|atlas-haswell-gnu|atlas-dev-sandybridge-gnu|atlas-dev-haswell-gnu|openBLAS-sandybridge-gnu|openBLAS-sandybridge-intel|openBLAS-haswell-gnu|openBLAS-haswell-intel|mkl|mkl-with-cuda)
+
+cyence:
+make [options] BLAS=(atlas-sandybridge-gnu|atlas-dev-sandybridge-gnu|openBLAS-sandybridge-gnu|openBLAS-sandybridge-intel|mkl|mkl-with-cuda)
+
+LOCAL(sarom):
 make [options] BLAS=(atlas|openBLAS|mkl)
 
 options:
@@ -46,3 +53,7 @@ verify-pinned:<br>
 debug-verify-pinned:<br>
 <br>Compiler optimization level: not set
 <br>Adds verbose printing on top of a verify-pinned build.
+
+no-gpu:<br>
+<br>Compiler optimization level: -O3
+<br>Pure CPU code. Random-number generation and DGEMM operations performed on the CPU.

@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
 #ifndef NOGPU
     maxMatrixSize=(0.9*freeGPUMemoryInBytes/8.0-nRows*nCols)/(nRows+nCols);
 #else
-    maxMatrixSize=(0.9*32.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
+    maxMatrixSize=(0.9*16.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
 #endif
 
 #ifdef PINNED

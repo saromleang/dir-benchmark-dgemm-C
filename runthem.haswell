@@ -1,0 +1,66 @@
+#!/bin/bash
+
+./dgemm.atlas-haswell-gnu.x 32 >& dgemm-atlas-haswell-gnu-032.log
+./dgemm.atlas-haswell-gnu.x 768 >& dgemm-atlas-haswell-gnu-00768.log
+./dgemm.atlas-haswell-gnu.x 1458 >& dgemm-atlas-haswell-gnu-1458.log
+./dgemm.atlas-haswell-gnu.x 1 >& dgemm-atlas-haswell-gnu-0001.log
+./dgemm.atlas-haswell-gnu.x 2 >& dgemm-atlas-haswell-gnu-0002.log
+./dgemm.atlas-haswell-gnu.x 4 >& dgemm-atlas-haswell-gnu-0004.log
+./dgemm.atlas-haswell-gnu.x 8 >& dgemm-atlas-haswell-gnu-0008.log
+./dgemm.atlas-haswell-gnu.x 16 >& dgemm-atlas-haswell-gnu-0016.log
+./dgemm.atlas-haswell-gnu.x 64 >& dgemm-atlas-haswell-gnu-0064.log
+./dgemm.atlas-haswell-gnu.x 128 >& dgemm-atlas-haswell-gnu-0128.log
+./dgemm.atlas-haswell-gnu.x 256 >& dgemm-atlas-haswell-gnu-0256.log
+./dgemm.atlas-haswell-gnu.x 512 >& dgemm-atlas-haswell-gnu-0512.log
+./dgemm.atlas-haswell-gnu.x 1024 >& dgemm-atlas-haswell-gnu-1024.log
+./dgemm.atlas-haswell-gnu.x 2048 >& dgemm-atlas-haswell-gnu-2048.log
+./dgemm.atlas-haswell-gnu.x 4096 >& dgemm-atlas-haswell-gnu-4096.log
+
+./dgemm.atlas-dev-haswell-gnu.x 32 >& dgemm-atlas-dev-haswell-gnu-032.log
+./dgemm.atlas-dev-haswell-gnu.x 768 >& dgemm-atlas-dev-haswell-gnu-00768.log
+./dgemm.atlas-dev-haswell-gnu.x 1458 >& dgemm-atlas-dev-haswell-gnu-1458.log
+./dgemm.atlas-dev-haswell-gnu.x 1 >& dgemm-atlas-dev-haswell-gnu-0001.log
+./dgemm.atlas-dev-haswell-gnu.x 2 >& dgemm-atlas-dev-haswell-gnu-0002.log
+./dgemm.atlas-dev-haswell-gnu.x 4 >& dgemm-atlas-dev-haswell-gnu-0004.log
+./dgemm.atlas-dev-haswell-gnu.x 8 >& dgemm-atlas-dev-haswell-gnu-0008.log
+./dgemm.atlas-dev-haswell-gnu.x 16 >& dgemm-atlas-dev-haswell-gnu-0016.log
+./dgemm.atlas-dev-haswell-gnu.x 64 >& dgemm-atlas-dev-haswell-gnu-0064.log
+./dgemm.atlas-dev-haswell-gnu.x 128 >& dgemm-atlas-dev-haswell-gnu-0128.log
+./dgemm.atlas-dev-haswell-gnu.x 256 >& dgemm-atlas-dev-haswell-gnu-0256.log
+./dgemm.atlas-dev-haswell-gnu.x 512 >& dgemm-atlas-dev-haswell-gnu-0512.log
+./dgemm.atlas-dev-haswell-gnu.x 1024 >& dgemm-atlas-dev-haswell-gnu-1024.log
+./dgemm.atlas-dev-haswell-gnu.x 2048 >& dgemm-atlas-dev-haswell-gnu-2048.log
+./dgemm.atlas-dev-haswell-gnu.x 4096 >& dgemm-atlas-dev-haswell-gnu-4096.log
+
+./dgemm.mkl.x 32 >& dgemm-mkl-032.log
+./dgemm.mkl.x 768 >& dgemm-mkl-00768.log
+./dgemm.mkl.x 1458 >& dgemm-mkl-1458.log
+./dgemm.mkl.x 1 >& dgemm-mkl-0001.log
+./dgemm.mkl.x 2 >& dgemm-mkl-0002.log
+./dgemm.mkl.x 4 >& dgemm-mkl-0004.log
+./dgemm.mkl.x 8 >& dgemm-mkl-0008.log
+./dgemm.mkl.x 16 >& dgemm-mkl-0016.log
+./dgemm.mkl.x 64 >& dgemm-mkl-0064.log
+./dgemm.mkl.x 128 >& dgemm-mkl-0128.log
+./dgemm.mkl.x 256 >& dgemm-mkl-0256.log
+./dgemm.mkl.x 512 >& dgemm-mkl-0512.log
+./dgemm.mkl.x 1024 >& dgemm-mkl-1024.log
+./dgemm.mkl.x 2048 >& dgemm-mkl-2048.log
+./dgemm.mkl.x 4096 >& dgemm-mkl-4096.log
+
+./dgemm.openBLAS-haswell-gnu.x 32 >& dgemm-openBLAS-haswell-gnu-032.log
+./dgemm.openBLAS-haswell-gnu.x 768 >& dgemm-openBLAS-haswell-gnu-00768.log
+./dgemm.openBLAS-haswell-gnu.x 1458 >& dgemm-openBLAS-haswell-gnu-1458.log
+./dgemm.openBLAS-haswell-gnu.x 1 >& dgemm-openBLAS-haswell-gnu-0001.log
+./dgemm.openBLAS-haswell-gnu.x 2 >& dgemm-openBLAS-haswell-gnu-0002.log
+./dgemm.openBLAS-haswell-gnu.x 4 >& dgemm-openBLAS-haswell-gnu-0004.log
+./dgemm.openBLAS-haswell-gnu.x 8 >& dgemm-openBLAS-haswell-gnu-0008.log
+./dgemm.openBLAS-haswell-gnu.x 16 >& dgemm-openBLAS-haswell-gnu-0016.log
+./dgemm.openBLAS-haswell-gnu.x 64 >& dgemm-openBLAS-haswell-gnu-0064.log
+./dgemm.openBLAS-haswell-gnu.x 128 >& dgemm-openBLAS-haswell-gnu-0128.log
+./dgemm.openBLAS-haswell-gnu.x 256 >& dgemm-openBLAS-haswell-gnu-0256.log
+./dgemm.openBLAS-haswell-gnu.x 512 >& dgemm-openBLAS-haswell-gnu-0512.log
+./dgemm.openBLAS-haswell-gnu.x 1024 >& dgemm-openBLAS-haswell-gnu-1024.log
+./dgemm.openBLAS-haswell-gnu.x 2048 >& dgemm-openBLAS-haswell-gnu-2048.log
+./dgemm.openBLAS-haswell-gnu.x 4096 >& dgemm-openBLAS-haswell-gnu-4096.log
+

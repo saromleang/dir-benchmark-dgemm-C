@@ -16,9 +16,7 @@ ifndef BLAS
               atlas-dev-sandybridge-gnu$(newline)\
               atlas-dev-haswell-gnu$(newline)\
               openBLAS-sandybridge-gnu$(newline)\
-              openBLAS-sandybridge-intel$(newline)\
               openBLAS-haswell-gnu$(newline)\
-              openBLAS-haswell-intel$(newline)\
               mkl$(newline)\
               mkl-with-cuda$(newline)\
 ))'
@@ -49,19 +47,19 @@ ifeq ($(BLASNAME),atlas)
 	includes_for_blas=-I/share/apps/share/blas/$(BLAS)/include
 endif
 
-ifeq ($(BLAS),openBLAS)
+ifeq ($(BLASNAME),openBLAS)
   opt= -O3
-	libs_for_blas=-L/share/apps/share/blas/$(BLAS)/lib -lopenblas -lpthread
-	includes_for_blas=-I/share/apps/share/blas/$(BLAS)/include
+	libs_for_blas=-L/share/apps/share/blas/$(BLAS)/build/lib -lopenblas -lpthread
+	includes_for_blas=-I/share/apps/share/blas/$(BLAS)/build/include
 endif
 
-ifeq ($(BLAS),mkl-with-cuda)
+ifeq ($(BLASNAME),mkl-with-cuda)
   opt= -O3 -DMKL
 	libs_for_blas=${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -Xcompiler -fopenmp -m64 -I${MKLROOT}/include
 endif
 
-ifeq ($(BLAS),mkl)
+ifeq ($(BLASNAME),mkl)
   opt= -O3 -DMKL
 	libs_for_blas= -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_gnu_thread.a -Wl,--end-group -ldl -lpthread -lm
 	includes_for_blas= -DMKL_ILP64 -fopenmp -m64 -I${MKLROOT}/include

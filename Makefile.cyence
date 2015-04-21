@@ -16,9 +16,7 @@ ifndef BLAS
               atlas-dev-sandybridge-gnu$(newline)\
               atlas-dev-haswell-gnu$(newline)\
               openBLAS-sandybridge-gnu$(newline)\
-              openBLAS-sandybridge-intel$(newline)\
               openBLAS-haswell-gnu$(newline)\
-              openBLAS-haswell-intel$(newline)\
               mkl$(newline)\
               mkl-with-cuda$(newline)\
 ))'

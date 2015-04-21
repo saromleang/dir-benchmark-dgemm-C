@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 ./dgemm.atlas-haswell-gnu.x 32 >& dgemm-atlas-haswell-gnu-032.log
 ./dgemm.atlas-haswell-gnu.x 768 >& dgemm-atlas-haswell-gnu-00768.log

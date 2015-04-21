@@ -378,7 +378,6 @@ int main(int argc, char *argv[])
       }
       if(m==n)
       {
-        printf("m == n\n");
         for(i=0;i<(m*k);i++)
         {
           a[i]=(double)rand() / (double)RAND_MAX;

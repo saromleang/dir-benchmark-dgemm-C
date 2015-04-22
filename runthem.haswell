@@ -8,7 +8,7 @@ export LD_LIBRARY_PATH=/share/apps/share/blas/openBLAS-haswell-gnu/build/lib:$LD
 ./dgemm.atlas-dev-haswell-gnu.x 32 >& dgemm-atlas-dev-haswell-gnu-032.log
 
 ./dgemm.mkl.x 768 >& dgemm-mkl-0768.log
-./dgemm.openBLAS-haswell-gnu.x 768 >& dgemm-openBLAS-haswell-gnu-00768.log
+./dgemm.openBLAS-haswell-gnu.x 768 >& dgemm-openBLAS-haswell-gnu-0768.log
 ./dgemm.atlas-haswell-gnu.x 768 >& dgemm-atlas-haswell-gnu-0768.log
 ./dgemm.atlas-dev-haswell-gnu.x 768 >& dgemm-atlas-dev-haswell-gnu-0768.log
 

@@ -1,66 +1,78 @@
 #!/bin/bash
 
 qsub -N dgemm-mkl-32   -o dgemm-mkl-0032.log qsub.cyence.mkl -v ARRAYSIZE=32
-qsub -N dgemm-mkl-768  -o dgemm-mkl-0768.log qsub.cyence.mkl -v ARRAYSIZE=768
-qsub -N dgemm-mkl-1458 -o dgemm-mkl-1458.log qsub.cyence.mkl -v ARRAYSIZE=1458
-qsub -N dgemm-mkl-1    -o dgemm-mkl-0001.log qsub.cyence.mkl -v ARRAYSIZE=1
-qsub -N dgemm-mkl-2    -o dgemm-mkl-0002.log qsub.cyence.mkl -v ARRAYSIZE=2
-qsub -N dgemm-mkl-4    -o dgemm-mkl-0004.log qsub.cyence.mkl -v ARRAYSIZE=4
-qsub -N dgemm-mkl-8    -o dgemm-mkl-0008.log qsub.cyence.mkl -v ARRAYSIZE=8
-qsub -N dgemm-mkl-16   -o dgemm-mkl-0016.log qsub.cyence.mkl -v ARRAYSIZE=16
-qsub -N dgemm-mkl-64   -o dgemm-mkl-0064.log qsub.cyence.mkl -v ARRAYSIZE=64
-qsub -N dgemm-mkl-128  -o dgemm-mkl-0128.log qsub.cyence.mkl -v ARRAYSIZE=128
-qsub -N dgemm-mkl-256  -o dgemm-mkl-0256.log qsub.cyence.mkl -v ARRAYSIZE=256
-qsub -N dgemm-mkl-512  -o dgemm-mkl-0512.log qsub.cyence.mkl -v ARRAYSIZE=512
-qsub -N dgemm-mkl-1024 -o dgemm-mkl-1024.log qsub.cyence.mkl -v ARRAYSIZE=1024
-qsub -N dgemm-mkl-2048 -o dgemm-mkl-2048.log qsub.cyence.mkl -v ARRAYSIZE=2048
-qsub -N dgemm-mkl-4096 -o dgemm-mkl-4096.log qsub.cyence.mkl -v ARRAYSIZE=4096
-
 qsub -N dgemm-openBLAS-sandybridge-gnu-32   -o dgemm-openBLAS-sandybridge-gnu-0032.log qsub.cyence.openBLAS -v ARRAYSIZE=32
-qsub -N dgemm-openBLAS-sandybridge-gnu-768  -o dgemm-openBLAS-sandybridge-gnu-0768.log qsub.cyence.openBLAS -v ARRAYSIZE=768
-qsub -N dgemm-openBLAS-sandybridge-gnu-1458 -o dgemm-openBLAS-sandybridge-gnu-1458.log qsub.cyence.openBLAS -v ARRAYSIZE=1458
-qsub -N dgemm-openBLAS-sandybridge-gnu-1    -o dgemm-openBLAS-sandybridge-gnu-0001.log qsub.cyence.openBLAS -v ARRAYSIZE=1
-qsub -N dgemm-openBLAS-sandybridge-gnu-2    -o dgemm-openBLAS-sandybridge-gnu-0002.log qsub.cyence.openBLAS -v ARRAYSIZE=2
-qsub -N dgemm-openBLAS-sandybridge-gnu-4    -o dgemm-openBLAS-sandybridge-gnu-0004.log qsub.cyence.openBLAS -v ARRAYSIZE=4
-qsub -N dgemm-openBLAS-sandybridge-gnu-8    -o dgemm-openBLAS-sandybridge-gnu-0008.log qsub.cyence.openBLAS -v ARRAYSIZE=8
-qsub -N dgemm-openBLAS-sandybridge-gnu-16   -o dgemm-openBLAS-sandybridge-gnu-0016.log qsub.cyence.openBLAS -v ARRAYSIZE=16
-qsub -N dgemm-openBLAS-sandybridge-gnu-64   -o dgemm-openBLAS-sandybridge-gnu-0064.log qsub.cyence.openBLAS -v ARRAYSIZE=64
-qsub -N dgemm-openBLAS-sandybridge-gnu-128  -o dgemm-openBLAS-sandybridge-gnu-0128.log qsub.cyence.openBLAS -v ARRAYSIZE=128
-qsub -N dgemm-openBLAS-sandybridge-gnu-256  -o dgemm-openBLAS-sandybridge-gnu-0256.log qsub.cyence.openBLAS -v ARRAYSIZE=256
-qsub -N dgemm-openBLAS-sandybridge-gnu-512  -o dgemm-openBLAS-sandybridge-gnu-0512.log qsub.cyence.openBLAS -v ARRAYSIZE=512
-qsub -N dgemm-openBLAS-sandybridge-gnu-1024 -o dgemm-openBLAS-sandybridge-gnu-1024.log qsub.cyence.openBLAS -v ARRAYSIZE=1024
-qsub -N dgemm-openBLAS-sandybridge-gnu-2048 -o dgemm-openBLAS-sandybridge-gnu-2048.log qsub.cyence.openBLAS -v ARRAYSIZE=2048
-qsub -N dgemm-openBLAS-sandybridge-gnu-4096 -o dgemm-openBLAS-sandybridge-gnu-4096.log qsub.cyence.openBLAS -v ARRAYSIZE=4096
-
 qsub -N dgemm-atlas-sandybridge-gnu-32   -o dgemm-atlas-sandybridge-gnu-0032.log qsub.cyence.atlas -v ARRAYSIZE=32
-qsub -N dgemm-atlas-sandybridge-gnu-768  -o dgemm-atlas-sandybridge-gnu-0768.log qsub.cyence.atlas -v ARRAYSIZE=768
-qsub -N dgemm-atlas-sandybridge-gnu-1458 -o dgemm-atlas-sandybridge-gnu-1458.log qsub.cyence.atlas -v ARRAYSIZE=1458
-qsub -N dgemm-atlas-sandybridge-gnu-1    -o dgemm-atlas-sandybridge-gnu-0001.log qsub.cyence.atlas -v ARRAYSIZE=1
-qsub -N dgemm-atlas-sandybridge-gnu-2    -o dgemm-atlas-sandybridge-gnu-0002.log qsub.cyence.atlas -v ARRAYSIZE=2
-qsub -N dgemm-atlas-sandybridge-gnu-4    -o dgemm-atlas-sandybridge-gnu-0004.log qsub.cyence.atlas -v ARRAYSIZE=4
-qsub -N dgemm-atlas-sandybridge-gnu-8    -o dgemm-atlas-sandybridge-gnu-0008.log qsub.cyence.atlas -v ARRAYSIZE=8
-qsub -N dgemm-atlas-sandybridge-gnu-16   -o dgemm-atlas-sandybridge-gnu-0016.log qsub.cyence.atlas -v ARRAYSIZE=16
-qsub -N dgemm-atlas-sandybridge-gnu-64   -o dgemm-atlas-sandybridge-gnu-0064.log qsub.cyence.atlas -v ARRAYSIZE=64
-qsub -N dgemm-atlas-sandybridge-gnu-128  -o dgemm-atlas-sandybridge-gnu-0128.log qsub.cyence.atlas -v ARRAYSIZE=128
-qsub -N dgemm-atlas-sandybridge-gnu-256  -o dgemm-atlas-sandybridge-gnu-0256.log qsub.cyence.atlas -v ARRAYSIZE=256
-qsub -N dgemm-atlas-sandybridge-gnu-512  -o dgemm-atlas-sandybridge-gnu-0512.log qsub.cyence.atlas -v ARRAYSIZE=512
-qsub -N dgemm-atlas-sandybridge-gnu-1024 -o dgemm-atlas-sandybridge-gnu-1024.log qsub.cyence.atlas -v ARRAYSIZE=1024
-qsub -N dgemm-atlas-sandybridge-gnu-2048 -o dgemm-atlas-sandybridge-gnu-2048.log qsub.cyence.atlas -v ARRAYSIZE=2048
-qsub -N dgemm-atlas-sandybridge-gnu-4096 -o dgemm-atlas-sandybridge-gnu-4096.log qsub.cyence.atlas -v ARRAYSIZE=4096
-
 qsub -N dgemm-atlas-dev-sandybridge-gnu-32   -o dgemm-atlas-dev-sandybridge-gnu-0032.log qsub.cyence.atlas-dev -v ARRAYSIZE=32
+
+qsub -N dgemm-mkl-768  -o dgemm-mkl-0768.log qsub.cyence.mkl -v ARRAYSIZE=768
+qsub -N dgemm-openBLAS-sandybridge-gnu-768  -o dgemm-openBLAS-sandybridge-gnu-0768.log qsub.cyence.openBLAS -v ARRAYSIZE=768
+qsub -N dgemm-atlas-sandybridge-gnu-768  -o dgemm-atlas-sandybridge-gnu-0768.log qsub.cyence.atlas -v ARRAYSIZE=768
 qsub -N dgemm-atlas-dev-sandybridge-gnu-768  -o dgemm-atlas-dev-sandybridge-gnu-0768.log qsub.cyence.atlas-dev -v ARRAYSIZE=768
+
+qsub -N dgemm-mkl-1458 -o dgemm-mkl-1458.log qsub.cyence.mkl -v ARRAYSIZE=1458
+qsub -N dgemm-openBLAS-sandybridge-gnu-1458 -o dgemm-openBLAS-sandybridge-gnu-1458.log qsub.cyence.openBLAS -v ARRAYSIZE=1458
+qsub -N dgemm-atlas-sandybridge-gnu-1458 -o dgemm-atlas-sandybridge-gnu-1458.log qsub.cyence.atlas -v ARRAYSIZE=1458
 qsub -N dgemm-atlas-dev-sandybridge-gnu-1458 -o dgemm-atlas-dev-sandybridge-gnu-1458.log qsub.cyence.atlas-dev -v ARRAYSIZE=1458
+
+qsub -N dgemm-mkl-1    -o dgemm-mkl-0001.log qsub.cyence.mkl -v ARRAYSIZE=1
+qsub -N dgemm-openBLAS-sandybridge-gnu-1    -o dgemm-openBLAS-sandybridge-gnu-0001.log qsub.cyence.openBLAS -v ARRAYSIZE=1
+qsub -N dgemm-atlas-sandybridge-gnu-1    -o dgemm-atlas-sandybridge-gnu-0001.log qsub.cyence.atlas -v ARRAYSIZE=1
 qsub -N dgemm-atlas-dev-sandybridge-gnu-1    -o dgemm-atlas-dev-sandybridge-gnu-0001.log qsub.cyence.atlas-dev -v ARRAYSIZE=1
+
+qsub -N dgemm-mkl-2    -o dgemm-mkl-0002.log qsub.cyence.mkl -v ARRAYSIZE=2
+qsub -N dgemm-openBLAS-sandybridge-gnu-2    -o dgemm-openBLAS-sandybridge-gnu-0002.log qsub.cyence.openBLAS -v ARRAYSIZE=2
+qsub -N dgemm-atlas-sandybridge-gnu-2    -o dgemm-atlas-sandybridge-gnu-0002.log qsub.cyence.atlas -v ARRAYSIZE=2
 qsub -N dgemm-atlas-dev-sandybridge-gnu-2    -o dgemm-atlas-dev-sandybridge-gnu-0002.log qsub.cyence.atlas-dev -v ARRAYSIZE=2
+
+qsub -N dgemm-mkl-4    -o dgemm-mkl-0004.log qsub.cyence.mkl -v ARRAYSIZE=4
+qsub -N dgemm-openBLAS-sandybridge-gnu-4    -o dgemm-openBLAS-sandybridge-gnu-0004.log qsub.cyence.openBLAS -v ARRAYSIZE=4
+qsub -N dgemm-atlas-sandybridge-gnu-4    -o dgemm-atlas-sandybridge-gnu-0004.log qsub.cyence.atlas -v ARRAYSIZE=4
 qsub -N dgemm-atlas-dev-sandybridge-gnu-4    -o dgemm-atlas-dev-sandybridge-gnu-0004.log qsub.cyence.atlas-dev -v ARRAYSIZE=4
+
+qsub -N dgemm-mkl-8    -o dgemm-mkl-0008.log qsub.cyence.mkl -v ARRAYSIZE=8
+qsub -N dgemm-openBLAS-sandybridge-gnu-8    -o dgemm-openBLAS-sandybridge-gnu-0008.log qsub.cyence.openBLAS -v ARRAYSIZE=8
+qsub -N dgemm-atlas-sandybridge-gnu-8    -o dgemm-atlas-sandybridge-gnu-0008.log qsub.cyence.atlas -v ARRAYSIZE=8
 qsub -N dgemm-atlas-dev-sandybridge-gnu-8    -o dgemm-atlas-dev-sandybridge-gnu-0008.log qsub.cyence.atlas-dev -v ARRAYSIZE=8
+
+qsub -N dgemm-mkl-16   -o dgemm-mkl-0016.log qsub.cyence.mkl -v ARRAYSIZE=16
+qsub -N dgemm-openBLAS-sandybridge-gnu-16   -o dgemm-openBLAS-sandybridge-gnu-0016.log qsub.cyence.openBLAS -v ARRAYSIZE=16
+qsub -N dgemm-atlas-sandybridge-gnu-16   -o dgemm-atlas-sandybridge-gnu-0016.log qsub.cyence.atlas -v ARRAYSIZE=16
 qsub -N dgemm-atlas-dev-sandybridge-gnu-16   -o dgemm-atlas-dev-sandybridge-gnu-0016.log qsub.cyence.atlas-dev -v ARRAYSIZE=16
+
+qsub -N dgemm-mkl-64   -o dgemm-mkl-0064.log qsub.cyence.mkl -v ARRAYSIZE=64
+qsub -N dgemm-openBLAS-sandybridge-gnu-64   -o dgemm-openBLAS-sandybridge-gnu-0064.log qsub.cyence.openBLAS -v ARRAYSIZE=64
+qsub -N dgemm-atlas-sandybridge-gnu-64   -o dgemm-atlas-sandybridge-gnu-0064.log qsub.cyence.atlas -v ARRAYSIZE=64
 qsub -N dgemm-atlas-dev-sandybridge-gnu-64   -o dgemm-atlas-dev-sandybridge-gnu-0064.log qsub.cyence.atlas-dev -v ARRAYSIZE=64
+
+qsub -N dgemm-mkl-128  -o dgemm-mkl-0128.log qsub.cyence.mkl -v ARRAYSIZE=128
+qsub -N dgemm-openBLAS-sandybridge-gnu-128  -o dgemm-openBLAS-sandybridge-gnu-0128.log qsub.cyence.openBLAS -v ARRAYSIZE=128
+qsub -N dgemm-atlas-sandybridge-gnu-128  -o dgemm-atlas-sandybridge-gnu-0128.log qsub.cyence.atlas -v ARRAYSIZE=128
 qsub -N dgemm-atlas-dev-sandybridge-gnu-128  -o dgemm-atlas-dev-sandybridge-gnu-0128.log qsub.cyence.atlas-dev -v ARRAYSIZE=128
+
+qsub -N dgemm-mkl-256  -o dgemm-mkl-0256.log qsub.cyence.mkl -v ARRAYSIZE=256
+qsub -N dgemm-openBLAS-sandybridge-gnu-256  -o dgemm-openBLAS-sandybridge-gnu-0256.log qsub.cyence.openBLAS -v ARRAYSIZE=256
+qsub -N dgemm-atlas-sandybridge-gnu-256  -o dgemm-atlas-sandybridge-gnu-0256.log qsub.cyence.atlas -v ARRAYSIZE=256
 qsub -N dgemm-atlas-dev-sandybridge-gnu-256  -o dgemm-atlas-dev-sandybridge-gnu-0256.log qsub.cyence.atlas-dev -v ARRAYSIZE=256
+
+qsub -N dgemm-mkl-512  -o dgemm-mkl-0512.log qsub.cyence.mkl -v ARRAYSIZE=512
+qsub -N dgemm-openBLAS-sandybridge-gnu-512  -o dgemm-openBLAS-sandybridge-gnu-0512.log qsub.cyence.openBLAS -v ARRAYSIZE=512
+qsub -N dgemm-atlas-sandybridge-gnu-512  -o dgemm-atlas-sandybridge-gnu-0512.log qsub.cyence.atlas -v ARRAYSIZE=512
 qsub -N dgemm-atlas-dev-sandybridge-gnu-512  -o dgemm-atlas-dev-sandybridge-gnu-0512.log qsub.cyence.atlas-dev -v ARRAYSIZE=512
+
+qsub -N dgemm-mkl-1024 -o dgemm-mkl-1024.log qsub.cyence.mkl -v ARRAYSIZE=1024
+qsub -N dgemm-openBLAS-sandybridge-gnu-1024 -o dgemm-openBLAS-sandybridge-gnu-1024.log qsub.cyence.openBLAS -v ARRAYSIZE=1024
+qsub -N dgemm-atlas-sandybridge-gnu-1024 -o dgemm-atlas-sandybridge-gnu-1024.log qsub.cyence.atlas -v ARRAYSIZE=1024
 qsub -N dgemm-atlas-dev-sandybridge-gnu-1024 -o dgemm-atlas-dev-sandybridge-gnu-1024.log qsub.cyence.atlas-dev -v ARRAYSIZE=1024
+
+qsub -N dgemm-mkl-2048 -o dgemm-mkl-2048.log qsub.cyence.mkl -v ARRAYSIZE=2048
+qsub -N dgemm-openBLAS-sandybridge-gnu-2048 -o dgemm-openBLAS-sandybridge-gnu-2048.log qsub.cyence.openBLAS -v ARRAYSIZE=2048
+qsub -N dgemm-atlas-sandybridge-gnu-2048 -o dgemm-atlas-sandybridge-gnu-2048.log qsub.cyence.atlas -v ARRAYSIZE=2048
 qsub -N dgemm-atlas-dev-sandybridge-gnu-2048 -o dgemm-atlas-dev-sandybridge-gnu-2048.log qsub.cyence.atlas-dev -v ARRAYSIZE=2048
+
+qsub -N dgemm-mkl-4096 -o dgemm-mkl-4096.log qsub.cyence.mkl -v ARRAYSIZE=4096
+qsub -N dgemm-openBLAS-sandybridge-gnu-4096 -o dgemm-openBLAS-sandybridge-gnu-4096.log qsub.cyence.openBLAS -v ARRAYSIZE=4096
+qsub -N dgemm-atlas-sandybridge-gnu-4096 -o dgemm-atlas-sandybridge-gnu-4096.log qsub.cyence.atlas -v ARRAYSIZE=4096
 qsub -N dgemm-atlas-dev-sandybridge-gnu-4096 -o dgemm-atlas-dev-sandybridge-gnu-4096.log qsub.cyence.atlas-dev -v ARRAYSIZE=4096
+
 

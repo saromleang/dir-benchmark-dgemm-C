@@ -113,13 +113,13 @@ int main(int argc, char *argv[])
   #endif
 #endif
 
-  long long int m=500;
-  long long int k=1000;
-  long long int n=1500;
-  
+  long long int m;
+  long long int k;
+  long long int n;
+  long long int n_last=0;
+
   int i, j, l, index, ratio;
   int iterations=10;
-//int ratioArray[12]={110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 1};
   int ratioArray[12]={1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110};
   
   long long int memoryRequired;
@@ -216,6 +216,10 @@ int main(int argc, char *argv[])
     maxMatrixSize=(0.9*freeGPUMemoryInBytes/8.0-nRows*nCols)/(nRows+nCols);
 #else
     maxMatrixSize=(0.9*16.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
+#endif
+
+#ifdef SAROM
+    maxMatrixSize=(0.9*4.0*1024.0*1024.0*1024.0/8.0-nRows*nCols)/(nRows+nCols);
 #endif
 
 #ifdef PINNED
@@ -352,38 +356,53 @@ int main(int argc, char *argv[])
       vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_ICDF,stream,n*k, b, 0.0, 1.0);
 
   #else
-      if(m>n)
+      if(l>1)
       {
-        for(i=0;i<(n*k);i++)
+        for(i=(n_last*k);i<(n*k);i++)
         {
-          a[i]=(double)rand() / (double)RAND_MAX;
-          b[i]=(double)rand() / (double)RAND_MAX;
-        }
-        for(j=(n*k);j<(m*k);j++)
-        {
-          a[j]=(double)rand() / (double)RAND_MAX;
-        }
-      }
-      if(m<n)
-      {
-        for(i=0;i<(m*k);i++)
-        {
-          a[i]=(double)rand() / (double)RAND_MAX;
-          b[i]=(double)rand() / (double)RAND_MAX;
-        }
-        for(j=(m*k);j<(n*k);j++)
-        {
-          b[j]=(double)rand() / (double)RAND_MAX;
-        }        
-      }
-      if(m==n)
-      {
-        for(i=0;i<(m*k);i++)
-        {
-          a[i]=(double)rand() / (double)RAND_MAX;
           b[i]=(double)rand() / (double)RAND_MAX;
         }
       }
+      else
+      {
+        if(m>n)
+        {
+          for(i=0;i<(n*k);i++)
+          {
+            a[i]=(double)rand() / (double)RAND_MAX;
+            b[i]=(double)rand() / (double)RAND_MAX;
+          }
+          for(j=(n*k);j<(m*k);j++)
+          {
+            a[j]=(double)rand() / (double)RAND_MAX;
+          }
+        }
+
+        if(m<n)
+        {
+          for(i=0;i<(m*k);i++)
+          {
+            a[i]=(double)rand() / (double)RAND_MAX;
+            b[i]=(double)rand() / (double)RAND_MAX;
+          }
+          for(j=(m*k);j<(n*k);j++)
+          {
+            b[j]=(double)rand() / (double)RAND_MAX;
+          }        
+        }
+
+        if(m==n)
+        {
+          for(i=0;i<(n*k);i++)
+          {
+            a[i]=(double)rand() / (double)RAND_MAX;
+            b[i]=(double)rand() / (double)RAND_MAX;
+          }
+        }
+      }
+
+      n_last=n;
+      
   #endif
 #endif
 

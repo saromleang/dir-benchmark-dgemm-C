@@ -61,34 +61,34 @@ ifeq ($(BLAS),mkl)
 endif
 
 all:
-	nvcc $(opt) $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug:
-	nvcc -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 cpu-dgemm:
-	nvcc $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 verify:
-	nvcc $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-verify:
-	nvcc -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 pinned:
-	nvcc $(opt) -DPINNED $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) -DPINNED $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-pinned:
-	nvcc -DPINNED -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM -DPINNED -DDEBUG $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 cpu-dgemm-pinned:
-	nvcc $(opt) -DPINNED -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) -DPINNED -DCPU_DGEMM $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 verify-pinned:
-	nvcc $(opt) -DPINNED -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM $(opt) -DPINNED -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 debug-verify-pinned:
-	nvcc -DPINNED -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
+	nvcc -DSAROM -DPINNED -DDEBUG -DCPU_DGEMM -DVERIFY $(includes_for_gpu) $(includes_for_blas) dgemm.c $(libs_for_gpu) $(libs_for_blas) -o dgemm.$(BLAS).x
 
 no-gpu:
-	$(CC) $(opt) -DNOGPU $(includes_for_blas) -lm dgemm.c $(libs_for_blas) -o dgemm.$(BLAS).x
+	$(CC) -DSAROM $(opt) -DNOGPU $(includes_for_blas) -lm dgemm.c $(libs_for_blas) -o dgemm.$(BLAS).x

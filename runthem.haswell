@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+export LD_LIBRARY_PATH=/share/apps/share/blas/openBLAS-sandbridge-gnu/build:$LD_LIBRARY_PATH
+
 ./dgemm.mkl.x 32 >& dgemm-mkl-032.log
 ./dgemm.openBLAS-haswell-gnu.x 32 >& dgemm-openBLAS-haswell-gnu-032.log
 ./dgemm.atlas-haswell-gnu.x 32 >& dgemm-atlas-haswell-gnu-032.log
